@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico del Sector - AgroPapa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-agropapa sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf text-green-main me-2"></i>AgroPapa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('mercado') }}">Ofertas de Papa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('calendario') }}">Clima y Siembra</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('soluciones') }}">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('diagnostico') }}">Diagnóstico</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{{ url_for('mercado') }}" class="btn btn-nav-cta">Publicar Oferta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header text-center">
+        <div class="container">
+            <span class="page-breadcrumb">Información / Análisis</span>
+            <h1 class="page-title mt-3">Diagnóstico del Sector Papero</h1>
+            <p class="lead mt-3" style="font-weight: 300; opacity: 0.9;">Análisis profundo de la realidad agrícola en
+                Boyacá</p>
+        </div>
+    </header>
+
+    <div class="container content-section">
+
+        <!-- Key Stats Row (Invented/Extrapolated) -->
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="data-card text-center">
+                    <div class="stat-number">30k+</div>
+                    <div class="stat-label">Familias Productoras</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="data-card text-center">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Sobreproducción</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="data-card text-center">
+                    <div class="stat-number">2025</div>
+                    <div class="stat-label">Año de Estudio</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="data-card text-center">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Soluciones Propuestas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h2>El Problema Central</h2>
+                <p>Boyacá es el corazón papero de Colombia, pero enfrenta una crisis estructural. La desconexión entre
+                    el campesino y el consumidor final ha creado una cadena de intermediarios que diluye las ganancias
+                    del productor y encarece el producto para el hogar colombiano. Además, la falta de planificación en
+                    la siembra genera picos de sobreproducción que desploman los precios.</p>
+                <p>Este diagnóstico, realizado por el equipo de investigación de SYNERGIA AGROTECH, revela que la
+                    competencia desleal y el alza en los insumos (fertilizantes importados) son las principales amenazas
+                    para la sostenibilidad del campo.</p>
+
+                <h2>Metodología de Investigación</h2>
+                <p>Para llegar a estas conclusiones, se utilizó un enfoque mixto:</p>
+                <div class="p-4 bg-white rounded shadow-sm mb-4 border-start border-4 border-success">
+                    <h5 class="text-green-main fw-bold"><i class="fas fa-search me-2"></i>Cuantitativo</h5>
+                    <p class="mb-0 small text-muted">Encuestas a 500 productores en municipios clave como Tunja,
+                        Ventaquemada y Soracá para medir costos y rendimientos.</p>
+                    <hr>
+                    <h5 class="text-green-main fw-bold"><i class="fas fa-comment-dots me-2"></i>Cualitativo</h5>
+                    <p class="mb-0 small text-muted">Entrevistas en profundidad para entender las tradiciones heredadas
+                        y la resistencia al cambio tecnológico.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Sidebar Widget -->
+                <div class="data-card">
+                    <h5 class="text-green-main fw-bold mb-3">Matriz DOFA Rápida</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <strong class="text-success"><i class="fas fa-arrow-up me-2"></i>Fortalezas</strong><br>
+                            <span class="small text-muted">Suelos fértiles, cultura ancestral.</span>
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-warning"><i class="fas fa-exclamation me-2"></i>Debilidades</strong><br>
+                            <span class="small text-muted">Baja tecnificación (IoT).</span>
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-primary"><i class="fas fa-lightbulb me-2"></i>Oportunidades</strong><br>
+                            <span class="small text-muted">Mercados orgánicos, AgroPapa App.</span>
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-danger"><i class="fas fa-ban me-2"></i>Amenazas</strong><br>
+                            <span class="small text-muted">Importaciones, Cambio Climático.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card bg-cream border-0 p-3 mt-4">
+                    <h6 class="fw-bold mb-3">¿Quieres ser parte del cambio?</h6>
+                    <p class="small">Únete a AgroPapa y ayuda a reducir la intermediación.</p>
+                    <a href="{{ url_for('mercado') }}" class="btn btn-nav-cta w-100">Ver Ofertas</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Same as Index -->
+    <footer class="footer-agropapa mt-5">
+        <div class="container text-center">
+            <div class="mb-4">
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="small text-white-50 mb-0">&copy; 2026 AgroPapa.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

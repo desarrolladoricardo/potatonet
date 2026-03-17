@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado de Papa - AgroPapa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-agropapa sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf text-green-main me-2"></i>AgroPapa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('mercado') }}">Ofertas de Papa</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('calendario') }}">Clima y Siembra</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('soluciones') }}">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('diagnostico') }}">Diagnóstico</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{{ url_for('mercado') }}" class="btn btn-nav-cta">Publicar Oferta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header text-center">
+        <div class="container">
+            <span class="page-breadcrumb">Compra Directa</span>
+            <h1 class="page-title mt-3">Mercado de Cosechas</h1>
+            <p class="lead mt-3" style="font-weight: 300; opacity: 0.9;">Papa fresca de Boyacá, sin intermediarios</p>
+        </div>
+    </header>
+
+    <div class="container content-section">
+        <div class="row">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3 mb-4">
+                <div class="data-card p-3">
+                    <h5 class="fw-bold mb-3">Filtrar por</h5>
+
+                    <label class="form-label small fw-bold text-muted">Variedad</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="v1" checked>
+                        <label class="form-check-label" for="v1">Pastusa (12)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="v2">
+                        <label class="form-check-label" for="v2">R-12 (8)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="v3">
+                        <label class="form-check-label" for="v3">Criolla (15)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="v4">
+                        <label class="form-check-label" for="v4">Sabanera (4)</label>
+                    </div>
+
+                    <hr>
+
+                    <label class="form-label small fw-bold text-muted">Ubicación</label>
+                    <select class="form-select form-select-sm mb-3">
+                        <option>Todos los municipios</option>
+                        <option>Tunja</option>
+                        <option>Ventaquemada</option>
+                        <option>Soracá</option>
+                    </select>
+
+                    <button class="btn btn-nav-cta w-100 mt-2">Aplicar Filtros</button>
+                </div>
+
+                <!-- Featured Producer Widget -->
+                <div class="data-card text-center bg-cream border-0">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                        class="rounded-circle mb-3 border border-3 border-white shadow-sm" style="width: 80px;">
+                    <h6 class="fw-bold">Productor Destacado</h6>
+                    <p class="small text-muted mb-2">Carlos Ruiz</p>
+                    <div class="text-warning small mb-3">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="small fst-italic">"Papa limpia y bien seleccionada. Recomendado."</p>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="mb-0 text-muted">Mostrando <strong>3</strong> de <strong>39</strong> resultados</p>
+                    <select class="form-select form-select-sm w-auto">
+                        <option>Ordenar por: Recientes</option>
+                        <option>Precio: Menor a Mayor</option>
+                    </select>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Product 1 -->
+                    <div class="col-md-4">
+                        <div class="product-card h-100">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='images/papa_pastusa_saco_1768971806746.png') }}"
+                                    class="card-img-top" alt="Papa Pastusa" style="height: 200px; object-fit: cover;">
+                                <span class="badge-variety position-absolute top-0 end-0 m-2">Pastusa</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="small text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i> Tunja,
+                                    vereda Runta</div>
+                                <h5 class="card-title fw-bold">Papa Pastusa Gruesa</h5>
+                                <p class="small text-muted mb-3">50 Bultos disponibles. Cosecha de ayer.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="product-price">$80.000</span>
+                                    <small class="text-muted">/ bulto</small>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a href="#" class="btn btn-outline-success w-100 btn-sm"><i
+                                        class="fab fa-whatsapp me-2"></i>Contactar</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-md-4">
+                        <div class="product-card h-100">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='images/papa_criolla_canasto_1768971822000.png') }}"
+                                    class="card-img-top" alt="Papa Criolla" style="height: 200px; object-fit: cover;">
+                                <span class="badge-variety position-absolute top-0 end-0 m-2">Criolla</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="small text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i>
+                                    Ventaquemada</div>
+                                <h5 class="card-title fw-bold">Papa Criolla Limpia</h5>
+                                <p class="small text-muted mb-3">Calidad extra. Ideal para fritar.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="product-price">$120.000</span>
+                                    <small class="text-muted">/ carga</small>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a href="#" class="btn btn-outline-success w-100 btn-sm"><i
+                                        class="fab fa-whatsapp me-2"></i>Contactar</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-md-4">
+                        <div class="product-card h-100">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='images/papa_r12_saco_1768971837604.png') }}"
+                                    class="card-img-top" alt="Papa R-12" style="height: 200px; object-fit: cover;">
+                                <span class="badge-variety position-absolute top-0 end-0 m-2">R-12</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="small text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i> Soracá
+                                </div>
+                                <h5 class="card-title fw-bold">R-12 Industrial</h5>
+                                <p class="small text-muted mb-3">Materia seca alta. Lavada.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="product-price">$75.000</span>
+                                    <small class="text-muted">/ bulto</small>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a href="#" class="btn btn-outline-success w-100 btn-sm"><i
+                                        class="fab fa-whatsapp me-2"></i>Contactar</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invented Product 4 -->
+                    <div class="col-md-4">
+                        <div class="product-card h-100">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='images/papa_tocana_detalle_1768971867587.png') }}"
+                                    class="card-img-top" alt="Papa Tocana" style="height: 200px; object-fit: cover;">
+                                <span class="badge-variety position-absolute top-0 end-0 m-2">Tocana</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="small text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i> Siachoque
+                                </div>
+                                <h5 class="card-title fw-bold">Tocana Especial</h5>
+                                <p class="small text-muted mb-3">De color rosado intenso. Sabor único.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="product-price">$90.000</span>
+                                    <small class="text-muted">/ bulto</small>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a href="#" class="btn btn-outline-success w-100 btn-sm"><i
+                                        class="fab fa-whatsapp me-2"></i>Contactar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+                        <li class="page-item active"><a class="page-link bg-success border-success" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link text-success" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link text-success" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link text-success" href="#">Siguiente</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-agropapa mt-5">
+        <div class="container text-center">
+            <p class="small text-white-50 mb-0">&copy; 2026 AgroPapa.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

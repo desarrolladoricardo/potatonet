@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos - AgroPapa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success navbar-agropapa sticky-top shadow-sm"
+        style="background-color: rgba(27, 94, 32, 0.95) !important;">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf me-2 text-warning"></i>AgroPapa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('mercado') }}">Ofertas de Papa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('clima') }}">Clima y Siembra</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('soluciones') }}">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('quienes_somos') }}">Quiénes
+                            Somos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contacto') }}">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header text-center">
+        <div class="container">
+            <span class="page-breadcrumb">Nuestra Historia</span>
+            <h1 class="page-title mt-3">Proyecto de Investigación AgroPapa</h1>
+            <p class="lead mt-3" style="font-weight: 300; opacity: 0.9;">Fortalecimiento del Cultivo de Papa en Boyacá a
+                través de una Red de Articulación Productiva</p>
+        </div>
+    </header>
+
+    <div class="container content-section">
+
+        <!-- Context Section -->
+        <div class="row mb-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="text-green-main fw-bold mb-4">El Problema que Resolvemos</h2>
+                <p class="lead text-muted">A pesar de ser el segundo productor nacional, Boyacá enfrenta una grave
+                    desconexión entre la producción y la comercialización.</p>
+                <p>Nuestra investigación reveló que la cadena productiva sufre de:</p>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2"><i class="fas fa-exclamation-circle text-warning me-2"></i><strong>Bajo nivel
+                            tecnológico</strong> e informalidad en el cultivo.</li>
+                    <li class="mb-2"><i class="fas fa-exclamation-circle text-warning me-2"></i><strong>Falta de
+                            asociatividad</strong> que debilita al pequeño productor.</li>
+                    <li class="mb-2"><i class="fas fa-exclamation-circle text-warning me-2"></i><strong>Intermediación
+                            excesiva</strong> que reduce las ganancias del campesino.</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="p-4 bg-cream rounded-3 text-center border border-success border-opacity-25">
+                    <i class="fas fa-users-cog fa-5x text-green-main mb-3"></i>
+                    <h4 class="fw-bold">Red de Articulación Productiva</h4>
+                    <p class="small">Nuestra solución (anteriormente POTATONET) busca crear un ecosistema digital que
+                        integre actores, conocimientos y mercados.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <!-- Mission & Vision -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="data-card h-100 p-5 text-center">
+                    <div class="icon-circle mb-4"
+                        style="width: 80px; height: 80px; background: var(--agropapa-green-main); color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto; font-size: 2rem;">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h2 class="fw-bold text-green-main mb-3">Misión</h2>
+                    <p class="lead mb-0 text-muted">"Impulsar la competitividad del sector papicultor en Boyacá mediante
+                        el uso de tecnologías de la información, conectando directamente a productores con el mercado y
+                        fomentando prácticas agrícolas sostenibles."</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="data-card h-100 p-5 text-center">
+                    <div class="icon-circle mb-4"
+                        style="width: 80px; height: 80px; background: var(--agropapa-yellow); color: var(--agropapa-text-main); display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto; font-size: 2rem;">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h2 class="fw-bold text-green-main mb-3">Visión</h2>
+                    <p class="lead mb-0 text-muted">"Para el 2030, seremos la plataforma líder en Colombia para la
+                        comercialización justa de tubérculos, reconocida por eliminar intermediarios y mejorar la
+                        calidad de vida de más de 30,000 familias campesinas."</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-agropapa mt-5">
+        <div class="container text-center">
+            <p class="small text-white-50 mb-0">&copy; 2026 AgroPapa.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

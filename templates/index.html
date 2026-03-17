@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPapa - Conectando el Campo</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Special Home Page Styles */
+        .hero-home {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url("{{ url_for('static', filename='images/agropapa_banner_panoramico_1769023594037.png') }}");
+            background-size: cover;
+            background-position: center;
+            height: 85vh;
+            /* Almost full screen */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-img:hover {
+            transform: scale(1.02);
+        }
+
+        .home-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+        .home-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .home-card .card-body {
+            padding: 2rem;
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background-color: var(--agropapa-cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--agropapa-green-main);
+            font-size: 2rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background-color: var(--agropapa-green-main);
+            color: white;
+            padding: 60px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar (Transparent initially could be nice, but stick to solid for usability) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success navbar-agropapa sticky-top shadow-sm"
+        style="background-color: rgba(27, 94, 32, 0.95) !important;">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf me-2 text-warning"></i>AgroPapa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('mercado') }}">Ofertas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('clima') }}">Clima</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('soluciones') }}">Soluciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('bitacora') }}">Bitácora</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contacto') }}">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold"
+                            href="{{ url_for('login') }}">Ingresar</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{{ url_for('mercado') }}"
+                        class="btn btn-warning text-dark fw-bold rounded-pill px-4">Publicar Cosecha</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Super Banner Hero -->
+    <div class="hero-home animate__animated animate__fadeIn">
+        <div class="hero-content">
+            <h1 class="hero-title">El Futuro del Agro es Ahora</h1>
+            <p class="hero-subtitle">Conectamos directamente a los productores de papa con el mercado, eliminando
+                barreras y maximizando ganancias.</p>
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{{ url_for('mercado') }}"
+                    class="btn btn-warning btn-lg px-5 py-3 rounded-pill fw-bold shadow">Ir al Mercado</a>
+                <a href="{{ url_for('diagnostico') }}"
+                    class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill fw-bold">Ver Diagnóstico</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access / Value Prop -->
+    <div class="py-5" style="position: relative; margin-top: -50px; z-index: 10;">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="home-card text-center">
+                        <div class="card-body">
+                            <div class="icon-circle">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">Comercio Justo</h3>
+                            <p class="text-muted">Vende tu cosecha directamente a compradores mayoristas sin
+                                intermediarios abusivos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="home-card text-center">
+                        <div class="card-body">
+                            <div class="icon-circle">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">Datos Reales</h3>
+                            <p class="text-muted">Toma decisiones basadas en el clima, precios actuales y fases lunares.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="home-card text-center">
+                        <div class="card-body">
+                            <div class="icon-circle">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">Capacitación</h3>
+                            <p class="text-muted">Accede a cursos y guías para mejorar la tecnificación de tu cultivo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Section: Farmer & Tech -->
+    <div class="container py-5 my-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{{ url_for('static', filename='images/agricultor_tecnologia_1769023608449.png') }}"
+                    class="img-fluid feature-img" alt="Agricultor con tecnología">
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <h5 class="text-success fw-bold text-uppercase ls-wide">Innovación Rural</h5>
+                <h2 class="display-4 fw-bold mb-4">La tecnología al servicio de tus manos</h2>
+                <p class="lead text-muted mb-4">AgroPapa no es solo una página, es tu herramienta de trabajo diaria.
+                    Lleva el control de tu producción, monitorea el mercado y conéctate con el mundo desde tu celular.
+                </p>
+
+                <ul class="list-unstyled">
+                    <li class="mb-3 d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                        <span>Monitoreo satelital de cultivos (Próximamente)</span>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                        <span>Alertas climáticas tempranas</span>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                        <span>Comunidad de apoyo entre productores</span>
+                    </li>
+                </ul>
+
+                <a href="{{ url_for('soluciones') }}" class="btn btn-outline-success btn-lg mt-3">Conocer Más</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h2 class="display-4 fw-bold text-warning">30k+</h2>
+                    <p class="lead mb-0">Familias Beneficiadas</p>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h2 class="display-4 fw-bold text-warning">85%</h2>
+                    <p class="lead mb-0">Mejora en Ingresos</p>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h2 class="display-4 fw-bold text-warning">120</h2>
+                    <p class="lead mb-0">Municipios Participantes</p>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="display-4 fw-bold text-warning">24/7</h2>
+                    <p class="lead mb-0">Soporte Técnico</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="fw-bold text-success mb-3"><i class="fas fa-leaf me-2"></i>AgroPapa</h4>
+                    <p class="text-white-50">Transformando el campo colombiano a través de la tecnología y la comunidad.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><a href="{{ url_for('index') }}"
+                                class="text-reset text-decoration-none">Inicio</a></li>
+                        <li class="mb-2"><a href="{{ url_for('mercado') }}"
+                                class="text-reset text-decoration-none">Mercado</a></li>
+                        <li class="mb-2"><a href="{{ url_for('contacto') }}"
+                                class="text-reset text-decoration-none">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Síguenos</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white social-icon"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="fab fa-twitter fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50 small">
+                &copy; 2026 AgroPapa. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scroll if needed needed
+    </script>
+</body>
+
+</html>

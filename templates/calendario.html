@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima y Siembra - AgroPapa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+        .calendar-day {
+            height: 120px;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+            transition: background 0.2s;
+        }
+
+        .calendar-day:hover {
+            background-color: #fafafa;
+        }
+
+        .calendar-header .col {
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #ddd;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .weather-widget {
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-agropapa sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf text-green-main me-2"></i>AgroPapa
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('mercado') }}">Ofertas de Papa</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('calendario') }}">Clima y
+                            Siembra</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('soluciones') }}">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('diagnostico') }}">Diagnóstico</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{{ url_for('mercado') }}" class="btn btn-nav-cta">Publicar Oferta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header text-center">
+        <div class="container">
+            <span class="page-breadcrumb">Planificación</span>
+            <h1 class="page-title mt-3">Clima y Calendario Agrícola</h1>
+            <p class="lead mt-3" style="font-weight: 300; opacity: 0.9;">Toma decisiones basadas en datos climáticos
+                reales</p>
+        </div>
+    </header>
+
+    <div class="container content-section">
+
+        <div class="row mb-5">
+            <!-- Weather Widget -->
+            <div class="col-md-4">
+                <div class="weather-widget shadow h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Tunja, Boyacá</h5>
+                        <span class="badge bg-white text-primary">Hoy</span>
+                    </div>
+                    <div class="text-center my-4">
+                        <i class="fas fa-cloud-sun fa-4x mb-3 text-warning"></i>
+                        <h1 class="display-3 fw-bold mb-0">15°C</h1>
+                        <p class="lead">Parcialmente Nublado</p>
+                    </div>
+                    <div class="row text-center border-top border-white pt-3" style="border-opacity: 0.3;">
+                        <div class="col-4">
+                            <small class="d-block opacity-75">Humedad</small>
+                            <strong>72%</strong>
+                        </div>
+                        <div class="col-4">
+                            <small class="d-block opacity-75">Viento</small>
+                            <strong>12 km/h</strong>
+                        </div>
+                        <div class="col-4">
+                            <small class="d-block opacity-75">Lluvia</small>
+                            <strong>10%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agronomic Tip -->
+            <div class="col-md-8">
+                <div class="data-card h-100">
+                    <h4 class="text-green-main fw-bold mb-3"><i class="fas fa-info-circle me-2"></i>Recomendación del
+                        Mes</h4>
+                    <p class="mb-2"><strong>Febrero es ideal para preparar terrenos.</strong> Estamos en fase de Luna
+                        Nueva, lo que favorece el crecimiento de raíces fuertes. Si tienes planeado sembrar papa
+                        Pastusa, asegúrate de haber realizado el análisis de suelo previamente.</p>
+                    <p class="mb-0">Recuerda: El gusano blanco es más activo en temporadas secas. Revisa tus monitoreos
+                        semanales.</p>
+                    <hr>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle text-warning fa-2x me-3"></i>
+                        <div>
+                            <h6 class="fw-bold mb-0">Alerta Temprana</h6>
+                            <small class="text-muted">Posibles heladas en la madrugada en zonas altas (> 2800
+                                msnm).</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="calendar-wrapper">
+            <div class="p-3 d-flex justify-content-between align-items-center bg-white border-bottom">
+                <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-chevron-left"></i></button>
+                <h3 class="mb-0 fw-bold text-green-main">Febrero 2025</h3>
+                <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="row g-0 text-center calendar-header">
+                <div class="col">Dom</div>
+                <div class="col">Lun</div>
+                <div class="col">Mar</div>
+                <div class="col">Mié</div>
+                <div class="col">Jue</div>
+                <div class="col">Vie</div>
+                <div class="col">Sáb</div>
+            </div>
+
+            <div class="row row-cols-7 g-0">
+                <!-- Empty days from prev month -->
+                <div class="col calendar-day bg-light text-muted"></div>
+                <div class="col calendar-day bg-light text-muted"></div>
+                <div class="col calendar-day bg-light text-muted"></div>
+                <div class="col calendar-day bg-light text-muted"></div>
+                <div class="col calendar-day bg-light text-muted"></div>
+                <div class="col calendar-day bg-light text-muted"></div>
+
+                <!-- Days 1-7 -->
+                <div class="col calendar-day"><span class="day-number fw-bold">1</span></div>
+                <div class="col calendar-day" style="background-color: #e8f5e9;">
+                    <span class="day-number fw-bold">2</span>
+                    <span class="badge bg-success w-100 mt-2 text-wrap" style="font-size: 0.7rem;">Luna Nueva<br><i
+                            class="fas fa-seedling"></i> Siembra</span>
+                </div>
+                <div class="col calendar-day" style="background-color: #e8f5e9;"><span
+                        class="day-number fw-bold">3</span></div>
+                <div class="col calendar-day"><span class="day-number fw-bold">4</span></div>
+                <div class="col calendar-day"><span class="day-number fw-bold">5</span></div>
+                <div class="col calendar-day"><span class="day-number fw-bold">6</span></div>
+                <div class="col calendar-day"><span class="day-number fw-bold">7</span></div>
+
+                <!-- Second week onwards truncated visuals for brevity, handled generally by loops in real apps -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-agropapa mt-5">
+        <div class="container text-center">
+            <p class="small text-white-50 mb-0">&copy; 2026 AgroPapa.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

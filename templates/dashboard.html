@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Analítico - AgroPapa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar-agropapa {
+            background-color: var(--agropapa-green-main, #1B5E20) !important;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 15px;
+        }
+
+        /* Sidebar Form Styles */
+        .analytics-form-card {
+            background: white;
+            border-radius: 15px;
+            border-top: 5px solid var(--agropapa-green-main, #1B5E20);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .analytics-form-card h4 {
+            color: var(--agropapa-green-dark, #0d3b14);
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Result Styles */
+        .dash-results-container {
+            display: none;
+            /* Hidden until analyzed */
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-icon {
+            font-size: 2.5rem;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .kpi-icon.bg-growth {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+
+        .kpi-icon.bg-ph {
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+        }
+
+        .kpi-icon.bg-water {
+            background: linear-gradient(135deg, #2196F3, #1565C0);
+        }
+
+        .kpi-icon.bg-moon {
+            background: linear-gradient(135deg, #9C27B0, #6A1B9A);
+        }
+
+        .kpi-card.border-growth {
+            border-left-color: #4CAF50;
+        }
+
+        .kpi-card.border-ph {
+            border-left-color: #00BCD4;
+        }
+
+        .kpi-card.border-water {
+            border-left-color: #2196F3;
+        }
+
+        .kpi-card.border-moon {
+            border-left-color: #9C27B0;
+        }
+
+        .kpi-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            color: #333;
+        }
+
+        .kpi-content p {
+            margin: 0;
+            color: #777;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        .chart-card h5 {
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Recommendation Section */
+        .recommendation-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendation-list li {
+            padding: 15px 20px;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--agropapa-green-main, #1B5E20);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .recommendation-list li i {
+            margin-top: 3px;
+            margin-right: 15px;
+            color: var(--agropapa-green-main, #1B5E20);
+            font-size: 1.2rem;
+        }
+
+        .placeholder-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 60vh;
+            color: #aaa;
+            text-align: center;
+        }
+
+        .placeholder-state i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success navbar-agropapa shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf me-2 text-warning"></i>AgroPapa
+            </a>
+            <div class="d-flex ms-auto align-items-center">
+                <span class="text-white me-3 fw-bold"><i class="fas fa-user-circle me-1"></i> {{ user|capitalize
+                    }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-sm btn-outline-light">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold mb-0">Panel Analítico de Cultivo</h2>
+                <p class="text-muted">Ingresa los datos de tu parcela para recibir una evaluación experta.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Input Form (Horizontal-ish layout) -->
+            <div class="col-lg-4 col-xl-3">
+                <div class="analytics-form-card">
+                    <h4><i class="fas fa-sliders-h me-2 text-warning"></i>Datos del Lote</h4>
+                    <form id="analyticsForm" onsubmit="analizarCultivo(event)">
+
+                        <div class="mb-3">
+                            <label class="form-label">Variedad de Papa</label>
+                            <select class="form-select shadow-sm" id="inpVariety" required>
+                                <option value="" disabled selected>Seleccionar...</option>
+                                <option value="pastusa">Pastusa (150-180 días)</option>
+                                <option value="sabanera">Sabanera (160-190 días)</option>
+                                <option value="criolla">Criolla (90-110 días)</option>
+                                <option value="diacol">Diacol Capiro (130-150 días)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de Siembra</label>
+                            <input type="date" class="form-control shadow-sm" id="inpDate" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Preparación del Cultivo</label>
+                            <select class="form-select shadow-sm" id="inpPrep" required>
+                                <option value="tractor">Arada con Tractor (Profunda)</option>
+                                <option value="animal">Tracción Animal (Media)</option>
+                                <option value="manual">Manual / Azadón</option>
+                                <option value="minima">Mínima Labranza</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label d-flex justify-content-between">
+                                <span>pH del Suelo <small class="text-muted">(Estimado)</small></span>
+                                <span id="phValue" class="fw-bold text-success">6.0</span>
+                            </label>
+                            <input type="range" class="form-range" id="inpPh" min="4.0" max="8.0" step="0.1" value="6.0"
+                                oninput="document.getElementById('phValue').innerText = this.value">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Frecuencia de Riego (o lluvias)</label>
+                            <select class="form-select shadow-sm" id="inpWater" required>
+                                <option value="diario">Diario / Lluvias fuertes</option>
+                                <option value="dos_dias">Cada 2-3 días (Secano/Riego)</option>
+                                <option value="semanal">Semanal</option>
+                                <option value="escaso">Escaso / Sequía</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Última Fase Lunar Notoria</label>
+                            <select class="form-select shadow-sm" id="inpMoon" required>
+                                <option value="nueva">Luna Nueva</option>
+                                <option value="creciente">Cuarto Creciente</option>
+                                <option value="llena">Luna Llena</option>
+                                <option value="menguante">Cuarto Menguante</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Insumos Principales Aplicados</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="nitrogeno" id="chkNit">
+                                <label class="form-check-label" for="chkNit">Urea / Nitrógeno</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="fosforo" id="chkFos">
+                                <label class="form-check-label" for="chkFos">Fósforo / Potasio</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="fungicida" id="chkFun">
+                                <label class="form-check-label" for="chkFun">Fungicidas / Insecticidas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="organico" id="chkOrg">
+                                <label class="form-check-label" for="chkOrg">Abonos Orgánicos</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100 fw-bold shadow">Analizar y Proyectar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Dashboard Results -->
+            <div class="col-lg-8 col-xl-9">
+
+                <!-- Initial Placeholder -->
+                <div id="placeholderArea" class="placeholder-state">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Esperando Datos</h3>
+                    <p class="lead">Completa el formulario lateral para generar el análisis de tu cultivo y ver la
+                        proyección de cosecha.</p>
+                </div>
+
+                <!-- Actual Dashboard (Hidden by default) -->
+                <div id="dashboardResults" class="dash-results-container">
+
+                    <!-- Top KPIs -->
+                    <div class="row g-3">
+                        <div class="col-md-6 col-xl-3">
+                            <div class="kpi-card border-growth">
+                                <div class="kpi-icon bg-growth"><i class="fas fa-seedling"></i></div>
+                                <div class="kpi-content">
+                                    <p>Días de Cultivo</p>
+                                    <h3 id="resDays">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <div class="kpi-card border-ph">
+                                <div class="kpi-icon bg-ph"><i class="fas fa-vial"></i></div>
+                                <div class="kpi-content">
+                                    <p>Estado del Suelo (pH)</p>
+                                    <h3 id="resPh" class="fs-4">Óptimo</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <div class="kpi-card border-water">
+                                <div class="kpi-icon bg-water"><i class="fas fa-tint"></i></div>
+                                <div class="kpi-content">
+                                    <p>Nivel de Humedad</p>
+                                    <h3 id="resWater" class="fs-4">Moderado</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <div class="kpi-card border-moon">
+                                <div class="kpi-icon bg-moon"><i class="fas fa-moon"></i></div>
+                                <div class="kpi-content">
+                                    <p>Influencia Lunar</p>
+                                    <h3 id="resMoon" class="fs-4">Favorable</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="row g-3 mt-1">
+                        <!-- Doughnut Chart: Progreso -->
+                        <div class="col-lg-5">
+                            <div class="chart-card">
+                                <h5><i class="fas fa-chart-pie me-2"></i>Progreso hacia Cosecha</h5>
+                                <div style="position: relative; height: 300px; width: 100%;">
+                                    <canvas id="progressChart"></canvas>
+                                    <!-- Center Text for Doughnut -->
+                                    <div id="chartCenterText"
+                                        style="position: absolute; top: 58%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
+                                        <h2 class="fw-bold mb-0 text-success" id="percetageText">0%</h2>
+                                        <small class="text-muted">Desarrollo</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Radar Chart: Balance de Insumos -->
+                        <div class="col-lg-7">
+                            <div class="chart-card">
+                                <h5><i class="fas fa-spider me-2"></i>Análisis de Insumos y Condiciones</h5>
+                                <div style="position: relative; height: 300px; width: 100%;">
+                                    <canvas id="radarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations Row -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="chart-card">
+                                <h5><i class="fas fa-clipboard-list me-2"></i>Hoja de Ruta y Recomendaciones Expertas
+                                </h5>
+                                <ul class="recommendation-list" id="recommendationsList">
+                                    <!-- Populated by JS -->
+                                    <li><i class="fas fa-check-circle"></i> Aquí aparecerán las recomendaciones
+                                        detalladas según tus datos.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set default date to 30 days ago
+        let today = new Date();
+        today.setDate(today.getDate() - 30);
+        document.getElementById('inpDate').valueAsDate = today;
+
+        // Chart instances
+        let progChart = null;
+        let pRadarChart = null;
+
+        function analizarCultivo(event) {
+            event.preventDefault();
+
+            // 1. Get Data
+            const variety = document.getElementById('inpVariety').value;
+            const sowDate = new Date(document.getElementById('inpDate').value);
+            const prep = document.getElementById('inpPrep').value;
+            const ph = parseFloat(document.getElementById('inpPh').value);
+            const water = document.getElementById('inpWater').value;
+            const moon = document.getElementById('inpMoon').value;
+
+            const hasNit = document.getElementById('chkNit').checked;
+            const hasFos = document.getElementById('chkFos').checked;
+            const hasFun = document.getElementById('chkFun').checked;
+            const hasOrg = document.getElementById('chkOrg').checked;
+
+            // 2. Calculate Base Metrics
+            const now = new Date();
+            const diffTime = Math.abs(now - sowDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            let maxDays = 150; // Default
+            if (variety === 'criolla') maxDays = 100;
+            else if (variety === 'pastusa' || variety === 'diacol') maxDays = 160;
+            else if (variety === 'sabanera') maxDays = 180;
+
+            const progressObj = Math.min((diffDays / maxDays) * 100, 100).toFixed(1);
+            const remainingDays = Math.max(maxDays - diffDays, 0);
+
+            // 3. UI Updates (Toggle Views)
+            document.getElementById('placeholderArea').style.display = 'none';
+            document.getElementById('dashboardResults').style.display = 'block';
+
+            // KPI: Days
+            document.getElementById('resDays').innerText = `${diffDays} / ${maxDays}`;
+
+            // KPI: pH
+            let phStatus = "Óptimo";
+            let phColor = "text-success";
+            if (ph < 5.0) { phStatus = "Muy Ácido"; phColor = "text-danger"; }
+            else if (ph >= 5.0 && ph <= 5.5) { phStatus = "Aceptable"; phColor = "text-warning"; }
+            else if (ph > 7.0) { phStatus = "Alcalino"; phColor = "text-danger"; }
+            document.getElementById('resPh').innerText = phStatus;
+            document.getElementById('resPh').className = `fs-4 fw-bold ${phColor}`;
+
+            // KPI: Water
+            let waterText = "Óptimo";
+            if (water === 'diario') waterText = "Peligro: Encharcamiento";
+            else if (water === 'escaso') waterText = "Riego Necesario";
+            document.getElementById('resWater').innerText = waterText;
+
+            // KPI: Moon
+            let moonText = "Favorable";
+            if (moon === 'llena' && diffDays < 20) moonText = "Crecimiento Foliar";
+            else if (moon === 'menguante' && diffDays > (maxDays / 2)) moonText = "Llena los tubérculos";
+            document.getElementById('resMoon').innerText = moonText;
+
+            // 4. Update Charts
+            renderProgressChart(progressObj, 100 - progressObj);
+            renderRadarChart(hasNit, hasFos, hasFun, hasOrg, prep, water);
+
+            // 5. Generate Recommendations
+            generateRecommendations(diffDays, maxDays, ph, water, moon, hasNit, hasFos, hasFun, hasOrg, prep, variety);
+        }
+
+        function renderProgressChart(done, left) {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            document.getElementById('percetageText').innerText = `${done}%`;
+
+            if (progChart) progChart.destroy();
+
+            progChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completado', 'Restante'],
+                    datasets: [{
+                        data: [done, left],
+                        backgroundColor: [
+                            '#4CAF50', // Agropapa growth color
+                            '#E0E0E0'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        function renderRadarChart(nit, fos, fun, org, prep, water) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+
+            // Generate scores based on inputs
+            let nutriScore = (nit ? 30 : 0) + (fos ? 40 : 10) + (org ? 30 : 0);
+            let healthScore = (fun ? 80 : 30) + (water === 'diario' ? -20 : 10);
+            let soilScore = (prep === 'tractor' ? 90 : (prep === 'animal' ? 70 : 50)) + (org ? 20 : 0);
+            let rootScore = (fos ? 70 : 30) + (water === 'dos_dias' ? 20 : 0);
+            let envScore = (water === 'dos_dias' || water === 'semanal' ? 80 : 40);
+
+            // Cap limits
+            nutriScore = Math.min(100, nutriScore);
+            healthScore = Math.min(100, Math.max(0, healthScore));
+            soilScore = Math.min(100, soilScore);
+            rootScore = Math.min(100, rootScore);
+
+            if (pRadarChart) pRadarChart.destroy();
+
+            pRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Nutrición Foliar', 'Salud/Defensa', 'Estructura Suelo', 'Desarrollo Tubérculo', 'Eficiencia Hídrica'],
+                    datasets: [{
+                        label: 'Estado Actual',
+                        data: [nutriScore, healthScore, soilScore, rootScore, envScore],
+                        fill: true,
+                        backgroundColor: 'rgba(27, 94, 32, 0.2)', // Agropapa Green
+                        borderColor: 'rgba(27, 94, 32, 1)',
+                        pointBackgroundColor: 'rgba(27, 94, 32, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(27, 94, 32, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function generateRecommendations(days, maxDays, ph, water, moon, nit, fos, fun, org, prep, variety) {
+            const list = document.getElementById('recommendationsList');
+            list.innerHTML = ''; // Clear
+
+            const addRec = (icon, html) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="${icon}"></i> <div>${html}</div>`;
+                list.appendChild(li);
+            };
+
+            // Stage recommendation
+            if (days < 30) {
+                addRec('fas fa-seedling', `<strong>Fase de germinación y emergencia:</strong> Mantén la humedad constante sin encharcar. Es crucial aplicar nitrógeno para incentivar el área foliar.`);
+            } else if (days < maxDays * 0.6) {
+                addRec('fas fa-leaf', `<strong>Fase de tuberización (Crecimiento vegetativo alto):</strong> Momento crítico. Requiere fósforo y potasio para engordar los tubérculos. Evita el estrés hídrico.`);
+            } else {
+                addRec('fas fa-tractor', `<strong>Fase de maduración:</strong> Reduce el riego progresivamente. Prepárate para secar el follaje (desyerba o químicos) antes de cosechar la papa ${variety}.`);
+            }
+
+            // pH Alerts
+            if (ph < 5.0) {
+                addRec('fas fa-flask text-danger', `<strong>Atención de pH (Ácido):</strong> Tu suelo tiene un pH de ${ph}, lo que limita la absorción de nutrientes. Recomendamos encarecidamente aplicar <strong>cal agrícola o dolomita</strong> para corregir la acidez.`);
+            } else if (ph > 7.0) {
+                addRec('fas fa-flask text-danger', `<strong>Atención de pH (Alcalino):</strong> Puede haber bloqueo de hierro o manganeso. Evita aguas de riego duras.`);
+            }
+
+            // Water
+            if (water === 'diario') {
+                addRec('fas fa-exclamation-triangle text-warning', `<strong>Riesgo de Pudrición:</strong> El riego o lluvia diaria aumenta enormemente el riesgo de Gota (Phytophthora infestans). Es obligatorio aplicar fungicidas sistémicos y asegurar buen drenaje (aporque alto).`);
+            } else if (water === 'escaso') {
+                addRec('fas fa-tint-slash text-danger', `<strong>Estrés Hídrico:</strong> Cuidado con la sequía o reducción del calibre de la papa. Invierte en sistema de riego o capta lluvia si es posible.`);
+            }
+
+            // Moon Logic
+            if (moon === 'menguante' && days > 40) {
+                addRec('fas fa-moon text-primary', `<strong>Aprovecha la Luna:</strong> El Cuarto Menguante concentra la savia en las raíces. Excelente momento para abonar directamente al suelo (Fósforo) y estimular el crecimiento del tubérculo.`);
+            }
+
+            // Inputs
+            if (!org) {
+                addRec('fas fa-recycle text-success', `<strong>Sugerencia de Suelo:</strong> No has reportado uso de materia orgánica. Integrar gallinaza compostada o humus mejorará la retención de agua y vida microbiana del suelo.`);
+            }
+            if (!fun && water !== 'escaso') {
+                addRec('fas fa-shield-alt text-warning', `<strong>Monitoreo Fitosanitario:</strong> Sin plaguicidas reportados, estás expuesto. Revisa de cerca el envés de la hoja por presencia de polilla (Tecia solanivora) y hongos.`);
+            }
+
+            // Fallback if empty
+            if (list.children.length === 0) {
+                addRec('fas fa-check-circle', `Tu cultivo de ${variety} va por buen camino. Sigue monitoreando constantemente.`);
+            }
+        }
+    </script>
+</body>
+
+</html>

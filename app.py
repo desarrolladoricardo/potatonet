@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 app = Flask(__name__)
@@ -50,6 +51,42 @@ def clima():
 @app.route('/quienes_somos')
 def quienes_somos():
     return render_template('quienes_somos.html')
+@app.route('/chatbot')
+def chatbot():
+    return render_template('chatbot.html')
+
+@app.route('/api/chat', methods=['POST'])
+def api_chat():
+    user_message = request.json.get('message', '')
+    if not user_message:
+        return {'reply': '¿Qué pasó sumercé? No me escribiste nada.'}, 400
+
+    api_key = "sk-be96ee07747f4e5999d55d7c8df95e0f"
+    
+    system_prompt = "Eres RICARDO la papa sabia. Solo hablas de consejos para sembrar papa y de sus variedades. Si te preguntan por cualquier otra cosa (por ejemplo, maíz), debes decir que solo hablas de papas y sus variedades únicamente. Debes hablar con el acento de Colombia, como paisa. Saluda usando expresiones como 'como esta sumerce' y usa palabras típicas de la región agrícola colombiana en tus respuestas."
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+
+    payload = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message}
+        ],
+        "temperature": 0.7
+    }
+
+    try:
+        response = requests.post("https://api.deepseek.com/chat/completions", headers=headers, json=payload, timeout=20)
+        response.raise_for_status()
+        reply_content = response.json()['choices'][0]['message']['content']
+        return {'reply': reply_content}
+    except Exception as e:
+        print(f"Error llamando a Deepseek API: {e}")
+        return {'reply': 'Uy sumercé, me disculpa pero la mente me dio vueltas y no me pude conectar. Se nos cayó la señal del cultivo, inténtalo de nuevo más lueguito.'}, 500
 
 
 # --- Login System ---

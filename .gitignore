@@ -13,3 +13,4 @@ __pycache__/
 # Otros archivos innecesarios
 .DS_Store
 comparador_insumos_papa.csv
+apikey_deepseek.txt

@@ -1,0 +1,56 @@
+=========================================================
+   GUÍA RÁPIDA: CÓMO SUBIR UN PROYECTO A GITHUB (2026)
+=========================================================
+
+Sigue estos pasos desde la terminal dentro de la carpeta de tu proyecto.
+
+PASO 1: Iniciar el repositorio (Solo se hace una vez)
+------------------------------------------------------
+Si el proyecto es nuevo y no tiene Git:
+$ git init
+
+PASO 2: Crear el archivo .gitignore
+------------------------------------------------------
+Crea un archivo llamado .gitignore para NO subir basura (venv, __pycache__, logs).
+Ejemplo de contenido:
+venv/
+__pycache__/
+*.log
+.env
+
+PASO 3: Preparar y Guardar Cambios (Commit)
+------------------------------------------------------
+Añade todos los archivos:
+$ git add .
+
+Crea el primer punto de guardado:
+$ git commit -m "Primer commit: Estructura base del proyecto"
+
+PASO 4: Configurar la Rama Principal
+------------------------------------------------------
+Asegúrate de que la rama se llame 'main':
+$ git branch -M main
+
+PASO 5: Conectar con GitHub (Remoto)
+------------------------------------------------------
+Copia la URL de tu repositorio en GitHub.
+
+OPCIÓN A (Con Token de Acceso Personal - RECOMENDADO):
+Si tienes un Token (PAT), úsalo así para que no te pida contraseña:
+$ git remote add origin https://TU_TOKEN@github.com/USUARIO/REPOSITORIO.git
+
+OPCIÓN B (Estándar):
+$ git remote add origin https://github.com/USUARIO/REPOSITORIO.git
+
+PASO 6: Subir los Archivos
+------------------------------------------------------
+$ git push -u origin main
+
+---------------------------------------------------------
+NOTAS IMPORTANTES:
+- Si ya tienes un remoto configurado y quieres cambiarlo (por ejemplo, para poner el Token):
+  $ git remote set-url origin https://TU_TOKEN@github.com/USUARIO/REPOSITORIO.git
+
+- ¡NUNCA compartas tu Token en público! Si lo haces, revócalo en:
+  GitHub -> Settings -> Developer settings -> Personal access tokens
+=========================================================

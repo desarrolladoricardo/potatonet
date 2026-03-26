@@ -61,7 +61,7 @@ def api_chat():
     if not user_message:
         return {'reply': '¿Qué pasó sumercé? No me escribiste nada.'}, 400
 
-    api_key = "sk-be96ee07747f4e5999d55d7c8df95e0f"
+    api_key = "aqui_el_api_key_de_deepseek"
     
     system_prompt = "Eres RICARDO la papa sabia. Solo hablas de consejos para sembrar papa y de sus variedades. Si te preguntan por cualquier otra cosa (por ejemplo, maíz), debes decir que solo hablas de papas y sus variedades únicamente. Debes hablar con el acento de Colombia, como paisa. Saluda usando expresiones como 'como esta sumerce' y usa palabras típicas de la región agrícola colombiana en tus respuestas."
 

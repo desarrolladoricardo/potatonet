@@ -4,42 +4,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clima y Siembra - AgroPapa</title>
+    <title>Horarios Flexibles - Domos Musicales</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <style>
-        .calendar-day {
-            height: 120px;
-            border-right: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 10px;
-            transition: background 0.2s;
-        }
-
-        .calendar-day:hover {
-            background-color: #fafafa;
-        }
-
-        .calendar-header .col {
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #ddd;
-            color: #555;
-            font-weight: 600;
-        }
-
-        .weather-widget {
-            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        .schedule-hero {
+            background: linear-gradient(rgba(76, 29, 149, 0.8), rgba(236, 72, 153, 0.7)),
+            url("{{ url_for('static', filename='images/horarios-musica.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
             color: white;
-            border-radius: 15px;
-            padding: 20px;
+            text-align: center;
+        }
+
+        .schedule-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon-circle-schedule {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 3.5rem;
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .time-slot {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e1b4b;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .time-slot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
+        }
+
+        .flexible-badge {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .music-note-decoration {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 8rem;
+            color: #7c3aed;
+            z-index: 0;
         }
     </style>
 </head>
@@ -47,10 +93,11 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-agropapa sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm"
+        style="background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%) !important;">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i class="fas fa-leaf text-green-main me-2"></i>AgroPapa
+            <a class="navbar-brand fw-bold text-white" href="{{ url_for('index') }}">
+                <i class="fas fa-music me-2" style="color: #fbbf24;"></i>Domos Musicales
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
@@ -58,145 +105,250 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('mercado') }}">Ofertas de Papa</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('calendario') }}">Clima y
-                            Siembra</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('soluciones') }}">Cursos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('diagnostico') }}">Diagnóstico</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('quienes_somos') }}">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('calendario') }}">Horarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('diagnostico') }}">Evaluación</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('bitacora') }}">Bitácora</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contacto') }}">Inscripciones</a></li>
                 </ul>
                 <div class="d-flex">
-                    <a href="{{ url_for('mercado') }}" class="btn btn-nav-cta">Publicar Oferta</a>
+                    <a href="{{ url_for('registro') }}"
+                        class="btn btn-warning text-dark fw-bold rounded-pill px-4">¡Inscríbete Gratis!</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="page-header text-center">
+    <!-- Schedule Hero Section -->
+    <section class="schedule-hero position-relative">
+        <i class="fas fa-music music-note-decoration" style="top: 10%; left: 5%;"></i>
+        <i class="fas fa-music music-note-decoration" style="bottom: 10%; right: 5%;"></i>
+        <div class="container position-relative" style="z-index: 1;">
+            <span class="flexible-badge">
+                <i class="fas fa-clock me-2"></i>Flexibilidad Total
+            </span>
+            <h1 class="display-3 fw-bold mb-4">🎵 Tú Eliges Tu Horario 🎸</h1>
+            <p class="lead mb-4" style="font-size: 1.4rem; font-weight: 300;">Podrás elegir horarios flexibles. Tú eres quien elige a qué horas estudiar. Estudia a tu ritmo y aprende música tropical.</p>
+            <div class="mt-4">
+                <p class="fs-5"><i class="fas fa-check-circle me-2" style="color: #fbbf24;"></i><strong>2 horas diarias</strong> entre 1 PM y 8 PM</p>
+                <p class="fs-5"><i class="fas fa-check-circle me-2" style="color: #fbbf24;"></i><strong>Lunes a Viernes</strong> - Cuando más te convenga</p>
+                <p class="fs-5"><i class="fas fa-check-circle me-2" style="color: #fbbf24;"></i><strong>Enfoque 100% práctico</strong> - ¡Aprende tocando!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Time Slots Section -->
+    <div class="py-5 bg-light">
         <div class="container">
-            <span class="page-breadcrumb">Planificación</span>
-            <h1 class="page-title mt-3">Clima y Calendario Agrícola</h1>
-            <p class="lead mt-3" style="font-weight: 300; opacity: 0.9;">Toma decisiones basadas en datos climáticos
-                reales</p>
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" style="color: #7c3aed;">Franjas Horarias Disponibles</h2>
+                <p class="lead text-muted">Elige las 2 horas que mejor se adapten a tu día</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-4">
+                        <span class="time-slot"><i class="fas fa-clock me-2"></i>1:00 PM - 3:00 PM</span>
+                        <span class="time-slot"><i class="fas fa-clock me-2"></i>2:00 PM - 4:00 PM</span>
+                        <span class="time-slot"><i class="fas fa-clock me-2"></i>3:00 PM - 5:00 PM</span>
+                        <span class="time-slot"><i class="fas fa-clock me-2"></i>4:00 PM - 6:00 PM</span>
+                        <span class="time-slot"><i class="fas fa-clock me-2"></i>5:00 PM - 7:00 PM</span>
+                        <span class="time-slot"><i class="fas fa-clock me-2"></i>6:00 PM - 8:00 PM</span>
+                    </div>
+                    <p class="text-center text-muted mt-3">
+                        <i class="fas fa-info-circle me-2" style="color: #7c3aed;"></i>
+                        Puedes combinar diferentes franjas según tu disponibilidad semanal
+                    </p>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <div class="container content-section">
+    <!-- Benefits Section -->
+    <div class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" style="color: #7c3aed;">¿Por Qué Nuestros Horarios Son Ideales?</h2>
+                <p class="lead text-muted">Diseñados para adaptarse a tu vida</p>
+            </div>
 
-        <div class="row mb-5">
-            <!-- Weather Widget -->
-            <div class="col-md-4">
-                <div class="weather-widget shadow h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Tunja, Boyacá</h5>
-                        <span class="badge bg-white text-primary">Hoy</span>
-                    </div>
-                    <div class="text-center my-4">
-                        <i class="fas fa-cloud-sun fa-4x mb-3 text-warning"></i>
-                        <h1 class="display-3 fw-bold mb-0">15°C</h1>
-                        <p class="lead">Parcialmente Nublado</p>
-                    </div>
-                    <div class="row text-center border-top border-white pt-3" style="border-opacity: 0.3;">
-                        <div class="col-4">
-                            <small class="d-block opacity-75">Humedad</small>
-                            <strong>72%</strong>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="schedule-card text-center">
+                        <div class="card-body p-4">
+                            <div class="icon-circle-schedule">
+                                <i class="fas fa-guitar"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">Estudia a Tu Ritmo</h3>
+                            <p class="text-muted">Sin presiones. Avanza según tu propio ritmo de aprendizaje, con el apoyo constante de nuestros profesores.</p>
                         </div>
-                        <div class="col-4">
-                            <small class="d-block opacity-75">Viento</small>
-                            <strong>12 km/h</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="schedule-card text-center">
+                        <div class="card-body p-4">
+                            <div class="icon-circle-schedule">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">Después del Colegio</h3>
+                            <p class="text-muted">Horarios pensados para estudiantes. Aprende música tropical después de tus clases regulares.</p>
                         </div>
-                        <div class="col-4">
-                            <small class="d-block opacity-75">Lluvia</small>
-                            <strong>10%</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="schedule-card text-center">
+                        <div class="card-body p-4">
+                            <div class="icon-circle-schedule">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="fw-bold mb-3">Clases en Grupo</h3>
+                            <p class="text-muted">Aprende con otros estudiantes, comparte experiencias y crea amistades mientras tocas música.</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Agronomic Tip -->
-            <div class="col-md-8">
-                <div class="data-card h-100">
-                    <h4 class="text-green-main fw-bold mb-3"><i class="fas fa-info-circle me-2"></i>Recomendación del
-                        Mes</h4>
-                    <p class="mb-2"><strong>Febrero es ideal para preparar terrenos.</strong> Estamos en fase de Luna
-                        Nueva, lo que favorece el crecimiento de raíces fuertes. Si tienes planeado sembrar papa
-                        Pastusa, asegúrate de haber realizado el análisis de suelo previamente.</p>
-                    <p class="mb-0">Recuerda: El gusano blanco es más activo en temporadas secas. Revisa tus monitoreos
-                        semanales.</p>
-                    <hr>
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-exclamation-triangle text-warning fa-2x me-3"></i>
-                        <div>
-                            <h6 class="fw-bold mb-0">Alerta Temprana</h6>
-                            <small class="text-muted">Posibles heladas en la madrugada en zonas altas (> 2800
-                                msnm).</small>
+    <!-- Weekly Schedule Visual -->
+    <div class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" style="color: #7c3aed;">Tu Semana Musical</h2>
+                <p class="lead text-muted">Organiza tus 2 horas diarias de lunes a viernes</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="schedule-card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead style="background: linear-gradient(135deg, #7c3aed, #ec4899);">
+                                        <tr>
+                                            <th class="text-white text-center py-3">Día</th>
+                                            <th class="text-white text-center py-3">Franja 1</th>
+                                            <th class="text-white text-center py-3">Franja 2</th>
+                                            <th class="text-white text-center py-3">Total Horas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center py-3 fw-bold">Lunes</td>
+                                            <td class="text-center py-3">1:00 PM - 8:00 PM</td>
+                                            <td class="text-center py-3">Tú eliges</td>
+                                            <td class="text-center py-3"><span class="badge bg-success">2 horas</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center py-3 fw-bold">Martes</td>
+                                            <td class="text-center py-3">1:00 PM - 8:00 PM</td>
+                                            <td class="text-center py-3">Tú eliges</td>
+                                            <td class="text-center py-3"><span class="badge bg-success">2 horas</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center py-3 fw-bold">Miércoles</td>
+                                            <td class="text-center py-3">1:00 PM - 8:00 PM</td>
+                                            <td class="text-center py-3">Tú eliges</td>
+                                            <td class="text-center py-3"><span class="badge bg-success">2 horas</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center py-3 fw-bold">Jueves</td>
+                                            <td class="text-center py-3">1:00 PM - 8:00 PM</td>
+                                            <td class="text-center py-3">Tú eliges</td>
+                                            <td class="text-center py-3"><span class="badge bg-success">2 horas</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center py-3 fw-bold">Viernes</td>
+                                            <td class="text-center py-3">1:00 PM - 8:00 PM</td>
+                                            <td class="text-center py-3">Tú eliges</td>
+                                            <td class="text-center py-3"><span class="badge bg-success">2 horas</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Calendar -->
-        <div class="calendar-wrapper">
-            <div class="p-3 d-flex justify-content-between align-items-center bg-white border-bottom">
-                <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-chevron-left"></i></button>
-                <h3 class="mb-0 fw-bold text-green-main">Febrero 2025</h3>
-                <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-chevron-right"></i></button>
-            </div>
-
-            <div class="row g-0 text-center calendar-header">
-                <div class="col">Dom</div>
-                <div class="col">Lun</div>
-                <div class="col">Mar</div>
-                <div class="col">Mié</div>
-                <div class="col">Jue</div>
-                <div class="col">Vie</div>
-                <div class="col">Sáb</div>
-            </div>
-
-            <div class="row row-cols-7 g-0">
-                <!-- Empty days from prev month -->
-                <div class="col calendar-day bg-light text-muted"></div>
-                <div class="col calendar-day bg-light text-muted"></div>
-                <div class="col calendar-day bg-light text-muted"></div>
-                <div class="col calendar-day bg-light text-muted"></div>
-                <div class="col calendar-day bg-light text-muted"></div>
-                <div class="col calendar-day bg-light text-muted"></div>
-
-                <!-- Days 1-7 -->
-                <div class="col calendar-day"><span class="day-number fw-bold">1</span></div>
-                <div class="col calendar-day" style="background-color: #e8f5e9;">
-                    <span class="day-number fw-bold">2</span>
-                    <span class="badge bg-success w-100 mt-2 text-wrap" style="font-size: 0.7rem;">Luna Nueva<br><i
-                            class="fas fa-seedling"></i> Siembra</span>
-                </div>
-                <div class="col calendar-day" style="background-color: #e8f5e9;"><span
-                        class="day-number fw-bold">3</span></div>
-                <div class="col calendar-day"><span class="day-number fw-bold">4</span></div>
-                <div class="col calendar-day"><span class="day-number fw-bold">5</span></div>
-                <div class="col calendar-day"><span class="day-number fw-bold">6</span></div>
-                <div class="col calendar-day"><span class="day-number fw-bold">7</span></div>
-
-                <!-- Second week onwards truncated visuals for brevity, handled generally by loops in real apps -->
+    <!-- CTA Section -->
+    <div class="py-5" style="background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);">
+        <div class="container text-center text-white">
+            <h2 class="display-5 fw-bold mb-4">¿Listo para Comenzar Tu Aventura Musical?</h2>
+            <p class="lead mb-4" style="font-weight: 300;">Inscríbete ahora y elige los horarios que mejor se adapten a ti</p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{{ url_for('contacto') }}"
+                    class="btn btn-light btn-lg px-5 py-3 rounded-pill fw-bold" style="color: #7c3aed;">
+                    <i class="fas fa-user-plus me-2"></i>Inscríbete Gratis
+                </a>
+                <a href="{{ url_for('quienes_somos') }}"
+                    class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill fw-bold">
+                    <i class="fas fa-info-circle me-2"></i>Conoce Más
+                </a>
             </div>
         </div>
-
     </div>
 
     <!-- Footer -->
-    <footer class="footer-agropapa mt-5">
-        <div class="container text-center">
-            <p class="small text-white-50 mb-0">&copy; 2026 AgroPapa.</p>
+    <footer class="bg-dark text-white py-5" style="background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%) !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="fw-bold mb-3"><i class="fas fa-music me-2" style="color: #fbbf24;"></i>Domos Musicales</h4>
+                    <p class="text-white-50">Organización sin ánimo de lucro que desarrolla talentos musicales en comunidades vulnerables. Transformando vidas a través de la música.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><a href="{{ url_for('index') }}"
+                                class="text-reset text-decoration-none">Inicio</a></li>
+                        <li class="mb-2"><a href="{{ url_for('quienes_somos') }}"
+                                class="text-reset text-decoration-none">Nosotros</a></li>
+                        <li class="mb-2"><a href="{{ url_for('calendario') }}"
+                                class="text-reset text-decoration-none">Horarios</a></li>
+                        <li class="mb-2"><a href="{{ url_for('contacto') }}"
+                                class="text-reset text-decoration-none">Inscripciones</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Contáctanos</h5>
+                    <div class="text-white-50 mb-3">
+                        <p><i class="fas fa-envelope me-2"></i>info@domosmusicales.org</p>
+                        <p><i class="fas fa-phone me-2"></i>+57 300 123 4567</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i>Comunidades Vulnerables - Colombia</p>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white social-icon"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="fab fa-tiktok fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50 small">
+                &copy; 2026 Domos Musicales. Todos los derechos reservados. | Organización Sin Ánimo de Lucro
+            </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Floating RICARDO Button -->
-    <a href="{{ url_for('chatbot') }}" class="ricardo-fab shadow">
-        <img src="{{ url_for('static', filename='images/RICARDO.png') }}" alt="Chat con Ricardo">
-        <span class="fab-tooltip text-warning">¡Pregúntele a Ricardo!</span>
+    <!-- Floating Chat Button -->
+    <a href="{{ url_for('chatbot') }}" class="ricardo-fab shadow" style="background: linear-gradient(135deg, #7c3aed, #ec4899); bottom: 30px; right: 30px; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 1000; transition: all 0.3s ease;">
+        <i class="fas fa-comments text-white" style="font-size: 1.8rem;"></i>
+        <span class="fab-tooltip" style="position: absolute; right: 80px; background: #1e1b4b; color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; opacity: 0; transition: opacity 0.3s;">¡Chatea con nosotros!</span>
     </a>
+    <style>
+        .ricardo-fab:hover .fab-tooltip {
+            opacity: 1;
+        }
+        .ricardo-fab:hover {
+            transform: scale(1.1);
+        }
+    </style>
 
 </body>
 

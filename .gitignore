@@ -1,16 +1,1 @@
-# Entorno virtual
-venv/
-.env
-
-# Archivos temporales de Python
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Logs
-*.log
-
-# Otros archivos innecesarios
-.DS_Store
-comparador_insumos_papa.csv
-apikey_deepseek.txt
+Nothing should be ignored based on the provided file changes, as they only include HTML template files which are source files.

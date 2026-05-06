@@ -1,1 +1,36 @@
-Nothing needs to be added to .gitignore since only a template file (calendario.html) was modified and no build artifacts, dependencies, or temporary files were changed.
+```
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Dependencies
+venv/
+.venv/
+.env
+.env.local
+*.env.*
+
+# Build/dist folders
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# Coverage reports
+.coverage
+coverage/
+htmlcov/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+```

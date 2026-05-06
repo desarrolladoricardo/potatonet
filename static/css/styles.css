@@ -1,62 +1,62 @@
 :root {
-    /* Paleta de Colores AgroPapa */
-    --agropapa-bg-cream: #FDFBF7;
+    /* Paleta de Colores Domos Musicales */
+    --domos-bg-cream: #FDFBF7;
     /* Beige/Cream Light - Fondo Principal */
-    --agropapa-green-main: #43A047;
-    /* Verde Agrícola Medio - Botones, Enlaces, Iconos */
-    --agropapa-green-dark: #1B5E20;
-    /* Verde Oscuro - Encabezados, Footer */
-    --agropapa-yellow: #FDD835;
-    /* Amarillo Suave - CTA Principal */
-    --agropapa-yellow-hover: #FBC02D;
-    --agropapa-white: #FFFFFF;
+    --domos-purple-main: #7c3aed;
+    /* Violeta Musical - Botones, Enlaces, Iconos */
+    --domos-purple-dark: #1e1b4b;
+    /* Azul Oscuro - Encabezados, Footer */
+    --domos-pink: #ec4899;
+    /* Rosa Vibrante - CTA Principal */
+    --domos-pink-hover: #db2777;
+    --domos-white: #FFFFFF;
     /* Tarjetas */
-    --agropapa-grey: #E0E0E0;
+    --domos-grey: #E0E0E0;
     /* Bordes */
-    --agropapa-text-main: #333333;
-    --agropapa-text-secondary: #666666;
+    --domos-text-main: #333333;
+    --domos-text-secondary: #666666;
 }
 
 body {
-    font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
-    background-color: var(--agropapa-bg-cream);
-    color: var(--agropapa-text-main);
+    font-family: 'Poppins', 'Roboto', 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--domos-bg-cream);
+    color: var(--domos-text-main);
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
 
-    /* Potato Cursor */
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewport='0 0 32 32' style='fill:black;font-size:30px;'><text y='50%25'>🥔</text></svg>") 16 16, auto;
+    /* Musical Note Cursor (G Clef) */
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewport='0 0 32 32' style='fill:%237c3aed;font-size:28px;'><text y='28'>𝄞</text></svg>") 16 16, auto;
 }
 
 /* Navbar */
-.navbar-agropapa {
-    background-color: var(--agropapa-bg-cream) !important;
-    border-bottom: 1px solid var(--agropapa-grey);
+.navbar-domos {
+    background-color: var(--domos-bg-cream) !important;
+    border-bottom: 1px solid var(--domos-grey);
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
-.navbar-agropapa .navbar-brand {
-    color: var(--agropapa-green-dark);
+.navbar-domos .navbar-brand {
+    color: var(--domos-purple-dark);
     font-weight: 700;
     font-size: 1.5rem;
 }
 
-.navbar-agropapa .nav-link {
-    color: var(--agropapa-text-main);
+.navbar-domos .nav-link {
+    color: var(--domos-text-main);
     font-weight: 500;
     margin-left: 10px;
     margin-right: 10px;
     transition: color 0.3s ease;
 }
 
-.navbar-agropapa .nav-link.active,
-.navbar-agropapa .nav-link:hover {
-    color: var(--agropapa-green-main);
+.navbar-domos .nav-link.active,
+.navbar-domos .nav-link:hover {
+    color: var(--domos-purple-main);
 }
 
 .btn-nav-cta {
-    background-color: var(--agropapa-green-main);
-    color: var(--agropapa-white);
+    background-color: var(--domos-purple-main);
+    color: var(--domos-white);
     border-radius: 50px;
     padding: 8px 25px;
     font-weight: 600;
@@ -65,18 +65,18 @@ body {
 }
 
 .btn-nav-cta:hover {
-    background-color: var(--agropapa-green-dark);
-    color: var(--agropapa-white);
+    background-color: var(--domos-purple-dark);
+    color: var(--domos-white);
     transform: translateY(-2px);
 }
 
 /* Hero Section */
-.hero-agropapa {
+.hero-domos {
     position: relative;
     background: url('../images/index.jpeg') no-repeat center center;
     background-size: cover;
     padding: 150px 0;
-    color: var(--agropapa-white);
+    color: var(--domos-white);
 }
 
 .hero-overlay {
@@ -109,7 +109,7 @@ body {
 }
 
 .btn-hero {
-    background-color: var(--agropapa-yellow);
+    background-color: var(--domos-pink);
     color: #333;
     font-weight: 700;
     padding: 15px 40px;
@@ -120,7 +120,7 @@ body {
 }
 
 .btn-hero:hover {
-    background-color: var(--agropapa-yellow-hover);
+    background-color: var(--domos-pink-hover);
     transform: scale(1.05);
 }
 
@@ -130,26 +130,26 @@ body {
 }
 
 .section-title {
-    color: var(--agropapa-green-dark);
+    color: var(--domos-purple-dark);
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
 /* What Is Section */
 .what-is-section {
-    background-color: var(--agropapa-bg-cream);
+    background-color: var(--domos-bg-cream);
 }
 
 .icon-box {
-    color: var(--agropapa-green-main);
+    color: var(--domos-purple-main);
     font-size: 2rem;
     margin-bottom: 15px;
 }
 
 /* Cards Section */
 .quick-access-card {
-    background-color: var(--agropapa-white);
-    border: 1px solid var(--agropapa-grey);
+    background-color: var(--domos-white);
+    border: 1px solid var(--domos-grey);
     border-radius: 15px;
     padding: 30px;
     text-align: center;
@@ -176,19 +176,19 @@ body {
 
 .card-icon {
     font-size: 2.5rem;
-    color: var(--agropapa-green-main);
+    color: var(--domos-purple-main);
 }
 
 .card-title-custom {
-    color: var(--agropapa-green-dark);
+    color: var(--domos-purple-dark);
     font-weight: 700;
     margin-bottom: 15px;
 }
 
 .btn-card {
     background-color: transparent;
-    border: 2px solid var(--agropapa-green-main);
-    color: var(--agropapa-green-main);
+    border: 2px solid var(--domos-purple-main);
+    color: var(--domos-purple-main);
     border-radius: 30px;
     padding: 8px 25px;
     font-weight: 600;
@@ -199,8 +199,8 @@ body {
 }
 
 .btn-card:hover {
-    background-color: var(--agropapa-green-main);
-    color: var(--agropapa-white);
+    background-color: var(--domos-purple-main);
+    color: var(--domos-white);
 }
 
 /* Farmer CTA */
@@ -208,33 +208,33 @@ body {
     background: linear-gradient(rgba(27, 94, 32, 0.8), rgba(27, 94, 32, 0.9)), url('https://images.unsplash.com/photo-1596627685698-4a92c0c7774d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
     background-size: cover;
     background-attachment: fixed;
-    color: var(--agropapa-white);
+    color: var(--domos-white);
     text-align: center;
 }
 
 /* Footer */
-.footer-agropapa {
-    background-color: var(--agropapa-green-dark);
+.footer-domos {
+    background-color: var(--domos-purple-dark);
     color: #a5d6a7;
-    /* Light green text */
+    /* Texto claro */
     padding: 60px 0 30px 0;
 }
 
 .footer-link {
-    color: var(--agropapa-white);
+    color: var(--domos-white);
     text-decoration: none;
     margin: 0 15px;
     transition: color 0.2s ease;
 }
 
 .footer-link:hover {
-    color: var(--agropapa-yellow);
+    color: var(--domos-pink);
 }
 
 .social-icon {
     font-size: 1.5rem;
     margin: 0 10px;
-    color: var(--agropapa-white);
+    color: var(--domos-white);
     transition: opacity 0.3s ease;
 }
 
@@ -243,18 +243,18 @@ body {
 }
 
 /* Custom Utilities */
-.text-green-main {
-    color: var(--agropapa-green-main);
+.text-purple-main {
+    color: var(--domos-purple-main);
 }
 
 .bg-cream {
-    background-color: var(--agropapa-bg-cream);
+    background-color: var(--domos-bg-cream);
 }
 
 /* Inner Page Headers */
 .page-header {
-    background-color: var(--agropapa-green-dark);
-    color: var(--agropapa-white);
+    background-color: var(--domos-purple-dark);
+    color: var(--domos-white);
     padding: 80px 0 40px;
     margin-bottom: 40px;
     background-image: linear-gradient(rgba(27, 94, 32, 0.9), rgba(27, 94, 32, 0.8)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
@@ -268,7 +268,7 @@ body {
 }
 
 .page-breadcrumb {
-    color: var(--agropapa-yellow);
+    color: var(--domos-pink);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -284,11 +284,11 @@ body {
 }
 
 .content-section h2 {
-    color: var(--agropapa-green-dark);
+    color: var(--domos-purple-dark);
     font-weight: 700;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-left: 5px solid var(--agropapa-yellow);
+    border-left: 5px solid var(--domos-pink);
     padding-left: 15px;
 }
 
@@ -299,13 +299,13 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
-    border-top: 4px solid var(--agropapa-green-main);
+    border-top: 4px solid var(--domos-purple-main);
 }
 
 .stat-number {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--agropapa-green-dark);
+    color: var(--domos-purple-dark);
 }
 
 .stat-label {
@@ -331,13 +331,13 @@ body {
 }
 
 .product-price {
-    color: var(--agropapa-green-dark);
+    color: var(--domos-purple-dark);
     font-size: 1.25rem;
     font-weight: 700;
 }
 
 .badge-variety {
-    background-color: var(--agropapa-yellow);
+    background-color: var(--domos-pink);
     color: black;
     font-weight: 500;
     font-size: 0.8rem;
@@ -351,53 +351,4 @@ body {
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-}
-
-/* Floating RICARDO Button */
-.ricardo-fab {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    background-color: var(--agropapa-green-main);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: transform 0.3s, box-shadow 0.3s;
-    text-decoration: none;
-    border: 3px solid white;
-}
-.ricardo-fab:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-.ricardo-fab img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.fab-tooltip {
-    position: absolute;
-    right: 90px;
-    background-color: var(--agropapa-green-dark);
-    color: var(--agropapa-yellow);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    font-weight: bold;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s;
-    white-space: nowrap;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    pointer-events: none;
-}
-.ricardo-fab:hover .fab-tooltip {
-    opacity: 1;
-    visibility: visible;
 }
